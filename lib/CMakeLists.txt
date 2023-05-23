@@ -1,0 +1,28 @@
+set(PROJECT_BASE_INCLUDE ${CMAKE_CURRENT_LIST_DIR}/include)
+file(GLOB_RECURSE PROJECT_BASE_INCLUDE_LIST include/**/*.hpp)
+file(GLOB_RECURSE PROJECT_BASE_SRC_LIST src/**/*.cpp)
+add_subdirectory(src/${PROJECT_NAME})
+
+# export
+export(
+  TARGETS ${PROJECT_NAME}
+  NAMESPACE ${PROJECT_NAME}::
+  FILE ${PROJECT_NAME}Config.cmake
+)
+install(
+  EXPORT ${PROJECT_NAME}Targets 
+  NAMESPACE ${PROJECT_NAME}:: 
+  DESTINATION lib/cmake/${PROJECT_NAME}
+)
+
+# install
+install(
+    DIRECTORY ${PROJECT_BASE_INCLUDE}/
+    DESTINATION include
+)
+install(
+    TARGETS ${PROJECT_NAME}
+    EXPORT ${PROJECT_NAME}Targets
+    DESTINATION lib
+    PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ
+)
