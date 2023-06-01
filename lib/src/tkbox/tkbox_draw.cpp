@@ -28,16 +28,22 @@ void Drawer::Draw(b2Body* body, bool has_transform) {
   Graphic* graphic = reinterpret_cast<Graphic*>(body->GetUserData().pointer);
 
   if (has_transform) {
-    const b2Transform& transform = body->GetTransform();
-
-    vector<b2Vec2> vertexes;
-    for (b2Vec2 vertex : graphic->vertexes) {
-      vertexes.push_back(b2Mul(transform, vertex));
-    }
-    DrawPolygon(&vertexes[0], graphic->vertexes.size(), graphic->color);
+    Draw(graphic, body->GetTransform());
   } else {
-    DrawPolygon(&graphic->vertexes[0], graphic->vertexes.size(), graphic->color);
+    Draw(graphic);
   }
+}
+
+void Drawer::Draw(Graphic* graphic, const b2Transform& transform) {
+  vector<b2Vec2> vertexes;
+  for (b2Vec2 vertex : graphic->vertexes) {
+    vertexes.push_back(b2Mul(transform, vertex));
+  }
+  DrawPolygon(&vertexes[0], graphic->vertexes.size(), graphic->color);
+}
+
+void Drawer::Draw(Graphic* graphic) {
+  DrawPolygon(&graphic->vertexes[0], graphic->vertexes.size(), graphic->color);
 }
 
 void Drawer::DrawPolygon(const b2Vec2 *vertix_lst, int32 count,

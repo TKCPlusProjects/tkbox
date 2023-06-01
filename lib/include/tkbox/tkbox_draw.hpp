@@ -27,7 +27,9 @@ public:
   void Flush();
 
   void Draw(b2Body* body, bool has_transform = true);
-  
+  void Draw(Graphic* graphic, const b2Transform& transform);
+  void Draw(Graphic* graphic);
+
   void DrawPolygon(const b2Vec2 *vertix_lst, int32 count,
                    const b2Color &color) override;
   void DrawSolidPolygon(const b2Vec2 *vertix_lst, int32 count,
