@@ -35,22 +35,52 @@ int main()
   world->SetSubStepping(true);
   world->SetDebugDraw(drawer.get());
 
-  int count = 20;
-  for (size_t i = 0; i < count; i++)
-  {
-    b2BodyDef bd;                          // 创建刚体定义对象
-    bd.position.Set(-20.0f, 0.0f);         // 设置初始位置
-    bd.type = b2_dynamicBody;              // 设置为动态刚体
-    b2Body *body = world->CreateBody(&bd); // 创建刚体
-    b2PolygonShape shape;                  // 创建多边形形状
-    shape.SetAsBox(1.0f, 1.0f);            // 设置形状大小
-    b2FixtureDef fd;                       // 创建夹具定义对象
-    fd.shape = &shape;                     // 设置夹具形状
-    fd.density = 1.0f;                     // 设置密度
-    fd.friction = 0.3f;                    // 设置摩擦系数
-    body->CreateFixture(&fd);
-    body->SetLinearVelocity(b2Vec2(1.0f, 0.0f));
-  }
+  b2Body *body;
+
+  vector<b2Vec2> vectors = {
+    b2Vec2( 0,  5.0f),
+    b2Vec2(-0.87f*5.0f,  0.5f*5.0f),
+    b2Vec2(-0.87f*5.0f, -0.5f*5.0f),
+    b2Vec2( 0, -5.0f),
+    b2Vec2( 0.87f*5.0f, -0.5f*5.0f),
+    b2Vec2( 0.87f*5.0f,  0.5f*5.0f),
+  };
+  b2PolygonShape shape;                  // 创建多边形形状
+  shape.Set(&vectors[0], vectors.size());
+  
+  b2FixtureDef fd;                       // 创建夹具定义对象
+  fd.shape = &shape;                     // 设置夹具形状
+  fd.density = 1.0f;                     // 设置密度
+  fd.friction = 0.3f;                    // 设置摩擦系数
+  
+  Graphic graphic({
+    b2Vec2( 0,  3.0f),
+    b2Vec2( 1.0f,  2.0f),
+    b2Vec2( 2.0f,  0.0f),
+    b2Vec2( 2.0f,  1.0f),
+    b2Vec2( 3.0f,  0),
+    b2Vec2( 3.0f, -3.0f),
+    b2Vec2( 2.0f, -1.0f),
+    b2Vec2( 1.0f, -2.0f),
+    b2Vec2( 1.0f, -3.0f),
+    b2Vec2( 0.0f, -2.0f),
+    b2Vec2(-1.0f, -3.0f),
+    b2Vec2(-1.0f, -2.0f),
+    b2Vec2(-2.0f, -1.0f),
+    b2Vec2(-3.0f, -3.0f),
+    b2Vec2(-3.0f,  0),
+    b2Vec2(-2.0f,  1.0f),
+    b2Vec2(-2.0f,  0.0f),
+    b2Vec2(-1.0f,  2.0f),
+  }, b2Color(0.0f, 1.0f, 0.0f, 1.0f));
+  b2BodyDef bd;                          // 创建刚体定义对象
+  bd.position.Set(0, 0.0f);         // 设置初始位置
+  bd.type = b2_dynamicBody;              // 设置为动态刚体
+  bd.angle = 0.5f * b2_pi;
+  bd.userData.pointer = reinterpret_cast<uintptr_t>(&graphic);
+
+  body = world->CreateBody(&bd);
+  body->CreateFixture(&fd);
 
   while (!glfwWindowShouldClose(window)) {
     glfwPollEvents();
@@ -59,6 +89,7 @@ int main()
 
     world->Step(1.0f / 60.0f, 10, 8);
     world->DebugDraw();
+    drawer->Draw(body);
     drawer->Flush();
 
     glfwSwapBuffers(window);

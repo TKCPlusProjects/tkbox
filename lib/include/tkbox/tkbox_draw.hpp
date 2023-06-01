@@ -7,6 +7,13 @@
 
 namespace tkht {
 namespace tkbox {
+class Graphic {
+public:
+  vector<b2Vec2> vertexes;
+  b2Color color;
+
+  Graphic(vector<b2Vec2> vertexes, b2Color color) : vertexes(vertexes), color(color) {};
+};
 class Drawer : public b2Draw {
 public:
   shared_ptr<Camera> camera;
@@ -19,6 +26,8 @@ public:
   void SetSize(int width, int height);
   void Flush();
 
+  void Draw(b2Body* body, bool has_transform = true);
+  
   void DrawPolygon(const b2Vec2 *vertix_lst, int32 count,
                    const b2Color &color) override;
   void DrawSolidPolygon(const b2Vec2 *vertix_lst, int32 count,
