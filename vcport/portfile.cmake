@@ -36,9 +36,9 @@
 #  vcpkg_from_bitbucket
 #  vcpkg_from_sourceforge
 vcpkg_download_distfile(ARCHIVE
-    URLS "https://github.com/TKCPlusProjects/tkbox/releases/download/0.1.5/tkbox-0.1.5.zip"
-    FILENAME "tkbox-0.1.5.zip"
-    SHA512 c64572f4436d8ee3d4c3470a95b700d48ce4d9969110f2c94b5263a580adf2e32132ac8ae1064c83ea5faa07f8f041353c4b3342f79df9b66947e957453c4774
+    URLS "https://github.com/TKCPlusProjects/tkbox/releases/download/0.1.6/tkbox-0.1.6.zip"
+    FILENAME "tkbox-0.1.6.zip"
+    SHA512 3c324721e6072c1ed374477bde67e041829041ab95d8479af5f876ab51e9fddaa3fbaeceb1d4bb15bfd5946913708c25d62e290ce9dd53efda6bc926d03f64d8
 )
 
 vcpkg_extract_source_archive_ex(
