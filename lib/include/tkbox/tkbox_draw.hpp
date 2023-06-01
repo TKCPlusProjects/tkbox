@@ -1,19 +1,13 @@
 #ifndef tkbox_draw_hpp
 #define tkbox_draw_hpp
 
+#include <tkbox/tkbox_graphic.hpp>
 #include <tkbox/tkbox_render_line.hpp>
 #include <tkbox/tkbox_render_point.hpp>
 #include <tkbox/tkbox_render_triangle.hpp>
 
 namespace tkht {
 namespace tkbox {
-class Graphic {
-public:
-  vector<b2Vec2> vertexes;
-  b2Color color;
-
-  Graphic(vector<b2Vec2> vertexes, b2Color color) : vertexes(vertexes), color(color) {};
-};
 class Drawer : public b2Draw {
 public:
   shared_ptr<Camera> camera;

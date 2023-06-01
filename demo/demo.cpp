@@ -53,26 +53,36 @@ int main()
   fd.density = 1.0f;                     // 设置密度
   fd.friction = 0.3f;                    // 设置摩擦系数
   
-  Graphic graphic({
-    b2Vec2( 0,  3.0f),
-    b2Vec2( 1.0f,  2.0f),
-    b2Vec2( 2.0f,  0.0f),
-    b2Vec2( 2.0f,  1.0f),
-    b2Vec2( 3.0f,  0),
-    b2Vec2( 3.0f, -3.0f),
-    b2Vec2( 2.0f, -1.0f),
-    b2Vec2( 1.0f, -2.0f),
-    b2Vec2( 1.0f, -3.0f),
-    b2Vec2( 0.0f, -2.0f),
-    b2Vec2(-1.0f, -3.0f),
-    b2Vec2(-1.0f, -2.0f),
-    b2Vec2(-2.0f, -1.0f),
-    b2Vec2(-3.0f, -3.0f),
-    b2Vec2(-3.0f,  0),
-    b2Vec2(-2.0f,  1.0f),
-    b2Vec2(-2.0f,  0.0f),
-    b2Vec2(-1.0f,  2.0f),
-  }, b2Color(0.0f, 1.0f, 0.0f, 1.0f));
+  Graphic graphic;
+  graphic.path = "a1.tkgp";
+  ifstream file(graphic.path);
+  if (file.is_open()) {
+    graphic.Read();
+  } else {
+    graphic.vertexes = {
+      b2Vec2( 0,  3.0f),
+      b2Vec2( 1.0f,  2.0f),
+      b2Vec2( 2.0f,  0.0f),
+      b2Vec2( 2.0f,  1.0f),
+      b2Vec2( 3.0f,  0),
+      b2Vec2( 3.0f, -3.0f),
+      b2Vec2( 2.0f, -1.0f),
+      b2Vec2( 1.0f, -2.0f),
+      b2Vec2( 1.0f, -3.0f),
+      b2Vec2( 0.0f, -2.0f),
+      b2Vec2(-1.0f, -3.0f),
+      b2Vec2(-1.0f, -2.0f),
+      b2Vec2(-2.0f, -1.0f),
+      b2Vec2(-3.0f, -3.0f),
+      b2Vec2(-3.0f,  0),
+      b2Vec2(-2.0f,  1.0f),
+      b2Vec2(-2.0f,  0.0f),
+      b2Vec2(-1.0f,  2.0f),
+    };
+    graphic.color = b2Color(0.0f, 1.0f, 0.0f, 1.0f);
+    graphic.Write();
+  }
+
   b2BodyDef bd;                          // 创建刚体定义对象
   bd.position.Set(0, 0.0f);         // 设置初始位置
   bd.type = b2_dynamicBody;              // 设置为动态刚体
