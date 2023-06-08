@@ -1,28 +1,20 @@
 #ifndef tkbox_draw_hpp
 #define tkbox_draw_hpp
 
-#include <tkbox/tkbox_graphic.hpp>
-#include <tkbox/tkbox_render_line.hpp>
-#include <tkbox/tkbox_render_point.hpp>
-#include <tkbox/tkbox_render_triangle.hpp>
+#include <tkbox/tkbox_base.hpp>
 
 namespace tkht {
 namespace tkbox {
+static const float kAxisScale = 0.4f;
+
 class Drawer : public b2Draw {
 public:
   shared_ptr<Camera> camera;
-  shared_ptr<RenderPoint> point;
-  shared_ptr<RenderLine> line;
-  shared_ptr<RenderTriangle> triangle;
+  shared_ptr<RendererPoint> point;
+  shared_ptr<RendererLine> line;
+  shared_ptr<RendererTriangle> triangle;
 
   Drawer();
-
-  void SetSize(int width, int height);
-  void Flush();
-
-  void Draw(b2Body* body, bool has_transform = true);
-  void Draw(Graphic* graphic, const b2Transform& transform);
-  void Draw(Graphic* graphic);
 
   void DrawPolygon(const b2Vec2 *vertix_lst, int32 count,
                    const b2Color &color) override;
@@ -39,6 +31,8 @@ public:
   void DrawString(int x, int y, const char *string, ...);
   void DrawString(const b2Vec2 &pos, const char *string, ...);
   void DrawAABB(b2AABB *aabb, const b2Color &color);
+
+  void Flush();
 };
 } // namespace tkbox
 } // namespace tkht
