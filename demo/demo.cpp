@@ -28,9 +28,9 @@ int main()
   glewExperimental = GL_TRUE;
   glewInit();
 
-  shared_ptr<Camera> camera_graphic = make_shared<Camera>(25.0f);
+  shared_ptr<tkgl::Camera> camera_graphic = make_shared<tkgl::Camera>(25.0f);
   camera_graphic->SetSize(width, height);
-  shared_ptr<tkgl::Drawer> drawer_graphic = make_shared<tkgl::Drawer>(camera_graphic, 0.0f);
+  shared_ptr<tkbox::Drawer> drawer_graphic = make_shared<tkbox::Drawer>(camera_graphic, 0.0f);
 
   Graphic graphic;
   graphic.path = "a1.tkgp";
@@ -61,14 +61,13 @@ int main()
     graphic.Write();
   }
 
-  shared_ptr<tkbox::Drawer> drawer = make_shared<tkbox::Drawer>();
-  drawer->camera->SetSize(width, height);
+  shared_ptr<tkgl::Camera> camera = make_shared<tkgl::Camera>(25.0f);
+  camera->SetSize(width, height);
+  shared_ptr<tkbox::Drawer> drawer = make_shared<tkbox::Drawer>(camera, 0.0f);
 
   shared_ptr<b2World> world = make_shared<b2World>(b2Vec2(0.0f, 0.0f));
   world->SetSubStepping(true);
   world->SetDebugDraw(drawer.get());
-
-  b2Body *body;
 
   vector<b2Vec2> vectors = {
     b2Vec2( 0,  5.0f),
@@ -87,13 +86,14 @@ int main()
   fd.friction = 0.3f;                    // 设置摩擦系数
   
   b2BodyDef bd;                          // 创建刚体定义对象
-  bd.position.Set(0, 0.0f);         // 设置初始位置
+  bd.position.Set(0, 0.0f);              // 设置初始位置
   bd.type = b2_dynamicBody;              // 设置为动态刚体
-  bd.angle = 0.5f * b2_pi;
+  // bd.angle = 0.5f * b2_pi;
   bd.userData.pointer = reinterpret_cast<uintptr_t>(&graphic);
 
-  body = world->CreateBody(&bd);
+  b2Body *body = world->CreateBody(&bd);
   body->CreateFixture(&fd);
+  body->SetLinearVelocity(b2Vec2(1.0f, 0.0f));
 
   while (!glfwWindowShouldClose(window)) {
     glfwPollEvents();
@@ -105,7 +105,7 @@ int main()
     drawer->Flush();
 
     Graphic* graphic = reinterpret_cast<Graphic*>(body->GetUserData().pointer);
-    drawer_graphic->DrawGraphic(graphic);
+    drawer_graphic->DrawGraphic(graphic, (Transform*)&body->GetTransform());
     drawer_graphic->Flush();
 
     glfwSwapBuffers(window);
