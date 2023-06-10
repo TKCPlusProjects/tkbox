@@ -1,6 +1,6 @@
 {
   "name": "tkbox",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "The tkbox is a port of vcpkg",
   "homepage": "https://github.com/ZhengXianda/tkbox",
   "dependencies": [
