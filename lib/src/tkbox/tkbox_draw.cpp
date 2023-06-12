@@ -15,7 +15,8 @@ void Drawer::DrawPoint(const b2Vec2 &p, float size, const b2Color &color) {
   tkgl::Drawer::DrawPoint(size, (Point*)&p, (Color*)&color);
 }
 void Drawer::DrawSegment(const b2Vec2 &p1, const b2Vec2 &p2, const b2Color &color) {
-  tkgl::Drawer::DrawSegment((Point*)&p1, (Point*)&p2, (Color*)&color);
+  b2Vec2 p[2] = {p1, p2};
+  tkgl::Drawer::DrawSegment((Point*)p, 2, (Color*)&color);
 }
 void Drawer::DrawTransform(const b2Transform &xf) {
   DrawSegment(xf.p, xf.p + kAxisScale * xf.q.GetXAxis(), b2Color(1.0f, 0.0f, 0.0f));
