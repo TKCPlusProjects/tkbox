@@ -33,7 +33,7 @@ int main()
   shared_ptr<tkbox::Drawer> drawer_graphic = make_shared<tkbox::Drawer>(camera_graphic, 0.0f);
 
   Graphic graphic;
-  graphic.path = "a1.tkgp";
+  graphic.path = strdup("a1.tkgp");
   if (filesystem::exists(graphic.path)) {
     graphic.Read();
   } else {
