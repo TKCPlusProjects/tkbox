@@ -12,7 +12,7 @@ Drawer::Drawer(shared_ptr<Camera> camera, float depth) : tkgl::Drawer(camera, de
 }
 
 void Drawer::DrawPoint(const b2Vec2 &p, float size, const b2Color &color) {
-  tkgl::Drawer::DrawPoint(size, (Point*)&p, (Color*)&color);
+  tkgl::Drawer::DrawPoint(size, (Point*)&p, 1, (Color*)&color);
 }
 void Drawer::DrawSegment(const b2Vec2 &p1, const b2Vec2 &p2, const b2Color &color) {
   b2Vec2 p[2] = {p1, p2};
